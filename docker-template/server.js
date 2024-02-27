@@ -19,6 +19,8 @@ const myPromise = new Promise((resolve, reject) => {
     reject("bad")
 })
 
+// pre node 15: rejected promises were given a warning
+// post node 15+ : non handled caught promises will crash your program
 myPromise.then(() => {
     console.log("this will never run") // never runs since its rejected each time
 })
