@@ -11,7 +11,7 @@ const port = 8080
 const client = new Client({
     password: "root",
     user: "root",
-    host: "postgres"
+    host: "postgres" // this maps to the ip of the container called postgres (important)
 })
 
 // serves a folder called `public` that we will create
@@ -36,7 +36,8 @@ app.get("/employees", async (req, res) => {
 
 // IIFE (immediately invoked function expression)
 // app connects to db - wrap this in IIFE so we can wait async for the db connection to establish b4 listening
-(async () => {
+// semi colon in front b/c https://github.com/expressjs/express/issues/3515
+;(async () => {
     await client.connect();
 
     app.listen(port, () => {
@@ -56,5 +57,5 @@ const myPromise = new Promise((resolve, reject) => {
 // pre node 15: rejected promises were given a warning
 // post node 15+ : non handled caught promises will crash your program
 myPromise.then(() => {
-    console.log("this will never run") // never runs since its rejected each time
+    console.log("hello") // never runs since its rejected each time
 })
